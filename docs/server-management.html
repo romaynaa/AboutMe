@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Server Management Documentation | Roma Yana Pasaribu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --bg2: #161b27;
+        --bg3: #1c2333;
+        --line: #222d40;
+        --cyan: #38bdf8;
+        --green: #34d399;
+        --orange: #fb923c;
+        --red: #f87171;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Inter", sans-serif;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 60px 24px 100px;
+      }
+
+      .back-link {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--cyan);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 32px;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      .header-tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--cyan);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: clamp(26px, 4vw, 36px);
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 36px;
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin: 40px 0 14px;
+        letter-spacing: -0.01em;
+      }
+
+      h3 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--cyan);
+        margin: 28px 0 10px;
+        font-family: var(--mono);
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 14px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 20px 0;
+      }
+
+      .summary-box {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px 18px;
+      }
+
+      .summary-box .lbl {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      .summary-box .val {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--green);
+        word-break: break-all;
+      }
+
+      .figure {
+        margin: 24px 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg2);
+      }
+
+      .figure img {
+        width: 100%;
+        display: block;
+      }
+
+      .figure-caption {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        padding: 10px 16px;
+        border-top: 1px solid var(--line);
+        background: var(--bg3);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 14px 0 0;
+      }
+
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .step-item::before {
+        content: "→";
+        color: var(--cyan);
+        font-family: var(--mono);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .figures-col {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      /* Code block */
+
+      .code-block {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--cyan);
+        border-radius: 6px;
+        padding: 14px 18px;
+        margin: 14px 0;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--green);
+        overflow-x: auto;
+      }
+
+      .code-block .prompt {
+        color: var(--cyan);
+        user-select: none;
+      }
+      /* Command table */
+
+      .cmd-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 13px;
+      }
+
+      .cmd-table th {
+        background: var(--bg3);
+        border: 1px solid var(--line);
+        padding: 10px 14px;
+        text-align: left;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--cyan);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .cmd-table td {
+        border: 1px solid var(--line);
+        padding: 10px 14px;
+        color: var(--muted);
+        vertical-align: top;
+      }
+
+      .cmd-table td:first-child {
+        font-family: var(--mono);
+        color: var(--green);
+        white-space: nowrap;
+        font-size: 12px;
+      }
+
+      .cmd-table tr:nth-child(even) td {
+        background: var(--bg2);
+      }
+      /* Tags */
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 16px 0;
+      }
+
+      .tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--cyan);
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 4px;
+        padding: 4px 10px;
+      }
+      /* Status badge */
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--mono);
+        font-size: 12px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 500;
+      }
+
+      .badge-success {
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+        color: var(--green);
+      }
+
+      .badge-warn {
+        background: rgba(251, 146, 60, 0.1);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        color: var(--orange);
+      }
+
+      .badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 60px;
+      }
+
+      footer span {
+        color: var(--cyan);
+      }
+
+      @media (max-width: 680px) {
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+        .cmd-table td:first-child {
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <a href="../index.html#projects" class="back-link"
+        >&larr; Back to Portfolio</a
+      >
+
+      <div class="header-tag">Server Management · Dibimbing.id</div>
+      <h1>
+        Management System &amp; Server di Kali Linux: Apache2 &amp; Virtual Host
+      </h1>
+      <div class="subtitle">
+        Linux server administration — Apache2 setup, access log analysis, and
+        virtual host configuration
+      </div>
+
+      <p>
+        Project ini mengeksplorasi administrasi web server Linux secara
+        end-to-end: mulai dari memverifikasi status Apache2, memonitor access
+        log, membuat Document Root, mengonfigurasi Virtual Host untuk domain
+        lokal, hingga memastikan website dapat diakses melalui browser.
+      </p>
+
+      <div class="tags">
+        <span class="tag">Apache2</span>
+        <span class="tag">Kali Linux</span>
+        <span class="tag">Bash</span>
+        <span class="tag">Virtual Host</span>
+        <span class="tag">DNS (hosts)</span>
+      </div>
+
+      <!-- PROJECT INFO -->
+      <h2>Project Overview</h2>
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="lbl">Platform</div>
+          <div class="val">Kali Linux (romayana@roma)</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Web Server</div>
+          <div class="val">Apache2 HTTP Server</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Domain Lokal</div>
+          <div class="val">latihan.com / www.latihan.com</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Document Root</div>
+          <div class="val">/var/www/latihan.com</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Browser</div>
+          <div class="val">Firefox 140.0 (x86_64)</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Status Akhir</div>
+          <div class="val">
+            <span class="badge badge-success">Berhasil</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 1 -->
+      <h2>1. Verifikasi Status Apache2</h2>
+      <p>
+        Langkah pertama adalah memastikan service Apache2 aktif dan berjalan
+        sebelum melakukan konfigurasi lebih lanjut.
+      </p>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo systemctl status apache2
+      </div>
+      <div class="figure">
+        <img
+          src="assets/sm-apache-status.png"
+          alt="Apache2 active running status"
+        />
+        <div class="figure-caption">
+          Fig 1 — Apache2 active (running) · Main PID: 4235 · Processing
+          requests
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">
+          Service <code>apache2.service</code> dalam kondisi
+          <strong>active (running)</strong>
+        </div>
+        <div class="step-item">Berjalan sejak Thu 2026-05-28 23:34:07 EDT</div>
+        <div class="step-item">
+          Memory usage: 10.1M (peak: 10.4M), CPU: 199ms
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <h2>2. Monitoring Access Log</h2>
+      <h3>2.1 Real-time Log Monitoring</h3>
+      <p>
+        Perintah <code>tail -f</code> digunakan untuk memantau log akses secara
+        real-time dan melihat request HTTP yang masuk ke server.
+      </p>
+      <div class="code-block">
+        <span class="prompt">$</span> tail -f /var/log/apache2/access.log
+      </div>
+      <div class="figure">
+        <img
+          src="assets/sm-access-log.png"
+          alt="Apache2 access log real-time"
+        />
+        <div class="figure-caption">
+          Fig 2 — Access log: GET / → 200 OK · GET /favicon.ico → 404
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">
+          <strong>GET / HTTP/1.1</strong> → Status 200, 3383 bytes — halaman
+          utama berhasil diakses
+        </div>
+        <div class="step-item">
+          <strong>GET /favicon.ico HTTP/1.1</strong> → Status 404, 527 bytes —
+          file favicon belum ada
+        </div>
+      </div>
+
+      <h3>2.2 Filter Log Error 404</h3>
+      <div class="code-block">
+        <span class="prompt">$</span> grep "404" /var/log/apache2/access.log
+      </div>
+      <div class="figure">
+        <img src="assets/sm-grep-404.png" alt="grep 404 from access log" />
+        <div class="figure-caption">
+          Fig 3 — Error 404: /favicon.ico dan /login tidak ditemukan
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">
+          <strong>GET /favicon.ico</strong> — File ikon browser tidak ditemukan
+          (404)
+        </div>
+        <div class="step-item">
+          <strong>GET /login</strong> — Path /login belum dikonfigurasi (404,
+          528 bytes)
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <h2>3. Membuat Document Root</h2>
+      <p>
+        Document root adalah direktori di mana file website disimpan. Dibuat
+        direktori khusus untuk domain <code>latihan.com</code>.
+      </p>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo mkdir /var/www/latihan.com
+      </div>
+      <div class="figure">
+        <img src="assets/sm-mkdir.png" alt="mkdir /var/www/latihan.com" />
+        <div class="figure-caption">
+          Fig 4 — Pembuatan direktori /var/www/latihan.com
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <h2>4. Membuat File index.html</h2>
+      <p>
+        File <code>index.html</code> dibuat sebagai halaman utama website
+        menggunakan editor nano. Halaman ini berisi portfolio pribadi dengan
+        desain modern menggunakan Google Fonts dan CSS variables.
+      </p>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo nano /var/www/latihan.com/index.html
+      </div>
+      <div class="figure">
+        <img
+          src="assets/sm-nano-html.png"
+          alt="nano editor with index.html content"
+        />
+        <div class="figure-caption">
+          Fig 5 — Editor nano: index.html dengan Google Fonts dan CSS variables
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">Title: <em>"Romayana - Creative Space"</em></div>
+        <div class="step-item">Google Fonts: Syne + DM Sans</div>
+        <div class="step-item">
+          CSS Variables: color palette (--c1: #FF3CAC, --c2: #784BA0, dst.)
+        </div>
+        <div class="step-item">
+          Layout portfolio modern dengan desain dark gradient
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <h2>5. Konfigurasi Virtual Host</h2>
+      <h3>5.1 Menyalin Konfigurasi Default</h3>
+      <p>
+        Konfigurasi Virtual Host dibuat dengan menyalin template default
+        Apache2, lalu memodifikasinya sesuai domain <code>latihan.com</code>.
+      </p>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo cp
+        /etc/apache2/sites-available/000-default.conf
+        /etc/apache2/sites-available/latihan.com.conf
+      </div>
+      <div class="figure">
+        <img
+          src="assets/sm-cp-conf.png"
+          alt="copy default conf to latihan.com.conf"
+        />
+        <div class="figure-caption">
+          Fig 6 — Menyalin konfigurasi default ke latihan.com.conf
+        </div>
+      </div>
+
+      <h3>5.2 Edit DocumentRoot</h3>
+      <p>
+        File konfigurasi dibuka dengan nano. Parameter
+        <code>DocumentRoot</code> diubah dari <code>/var/www/html</code> menjadi
+        <code>/var/www/latihan.com</code>.
+      </p>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo nano
+        /etc/apache2/sites-available/latihan.com.conf
+      </div>
+      <div class="figure">
+        <img
+          src="assets/sm-vhost-conf.png"
+          alt="VirtualHost configuration file"
+        />
+        <div class="figure-caption">
+          Fig 7 — VirtualHost *:80 dengan DocumentRoot /var/www/latihan.com
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <h2>6. Aktivasi &amp; Deaktivasi Site</h2>
+      <h3>6.1 Menonaktifkan Site Default</h3>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo a2dissite 000-default.conf
+      </div>
+      <div class="figure">
+        <img src="assets/sm-a2dissite.png" alt="a2dissite 000-default.conf" />
+        <div class="figure-caption">
+          Fig 8 — Site 000-default berhasil dinonaktifkan
+        </div>
+      </div>
+
+      <h3>6.2 Mengaktifkan Site latihan.com</h3>
+      <div class="code-block">
+        <span class="prompt">$</span> sudo a2ensite latihan.com.conf<br />
+        <span class="prompt">$</span> sudo systemctl reload apache2
+      </div>
+      <div class="figure">
+        <img src="assets/sm-a2ensite.png" alt="a2ensite latihan.com.conf" />
+        <div class="figure-caption">
+          Fig 9 — Site latihan.com berhasil diaktifkan, Apache2 direload
+        </div>
+      </div>
+
+      <!-- STEP 7 -->
+      <h2>7. Konfigurasi /etc/hosts</h2>
+      <p>
+        Karena <code>latihan.com</code> adalah domain lokal, ditambahkan entri
+        pada file <code>/etc/hosts</code> agar sistem dapat meresolusi domain ke
+        IP lokal (127.0.0.1).
+      </p>
+      <div class="code-block"><span class="prompt">$</span> cat /etc/hosts</div>
+      <div class="figure">
+        <img src="assets/sm-hosts.png" alt="/etc/hosts file content" />
+        <div class="figure-caption">
+          Fig 10 — /etc/hosts: latihan.com dan www.latihan.com → 127.0.0.1
+        </div>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="lbl">127.0.0.1</div>
+          <div class="val">latihan.com</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">127.0.0.1</div>
+          <div class="val">www.latihan.com</div>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <h2>8. Hasil Pengujian</h2>
+      <p>
+        Setelah seluruh konfigurasi selesai, website diakses melalui browser
+        Firefox untuk memverifikasi bahwa Virtual Host berjalan dengan benar dan
+        halaman HTML berhasil ditampilkan.
+      </p>
+      <div class="figure">
+        <img
+          src="assets/sm-result.png"
+          alt="latihan.com website result in Firefox"
+        />
+        <div class="figure-caption">
+          Fig 11 — http://latihan.com berhasil diakses di Firefox 140.0
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-item">
+          Heading: <em>"Halo, saya Romayana"</em> tampil dengan benar
+        </div>
+        <div class="step-item">
+          Deskripsi, tombol "Lihat Karya" dan "Hubungi Saya" terender
+        </div>
+        <div class="step-item">
+          Design dark gradient (pink → purple → hijau) berhasil ditampilkan
+        </div>
+        <div class="step-item">
+          Domain menampilkan "Not Secure" karena menggunakan HTTP (bukan HTTPS)
+        </div>
+      </div>
+
+      <!-- COMMAND SUMMARY -->
+      <h2>Rangkuman Perintah</h2>
+      <table class="cmd-table">
+        <thead>
+          <tr>
+            <th>Perintah</th>
+            <th>Fungsi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>sudo systemctl status apache2</td>
+            <td>Cek status service Apache2</td>
+          </tr>
+          <tr>
+            <td>tail -f /var/log/apache2/access.log</td>
+            <td>Monitor log akses Apache2 secara real-time</td>
+          </tr>
+          <tr>
+            <td>grep "404" /var/log/apache2/access.log</td>
+            <td>Filter request dengan error 404 dari log</td>
+          </tr>
+          <tr>
+            <td>sudo mkdir /var/www/latihan.com</td>
+            <td>Buat direktori document root untuk domain</td>
+          </tr>
+          <tr>
+            <td>sudo nano /var/www/latihan.com/index.html</td>
+            <td>Buat file HTML halaman utama</td>
+          </tr>
+          <tr>
+            <td>sudo cp 000-default.conf latihan.com.conf</td>
+            <td>Salin template konfigurasi Virtual Host</td>
+          </tr>
+          <tr>
+            <td>sudo nano latihan.com.conf</td>
+            <td>Edit konfigurasi: ubah DocumentRoot</td>
+          </tr>
+          <tr>
+            <td>sudo a2dissite 000-default.conf</td>
+            <td>Nonaktifkan site default Apache2</td>
+          </tr>
+          <tr>
+            <td>sudo a2ensite latihan.com.conf</td>
+            <td>Aktifkan Virtual Host latihan.com</td>
+          </tr>
+          <tr>
+            <td>sudo systemctl reload apache2</td>
+            <td>Reload Apache2 untuk menerapkan konfigurasi baru</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- CONCLUSION -->
+      <h2>Kesimpulan</h2>
+      <p>
+        Project ini berhasil mendemonstrasikan konfigurasi Apache2 Virtual Host
+        secara end-to-end pada Kali Linux. Dimulai dari verifikasi status
+        service, monitoring log, pembuatan Document Root, konfigurasi Virtual
+        Host, manajemen site dengan
+        <code>a2ensite</code>/<code>a2dissite</code>, hingga resolusi domain
+        lokal melalui <code>/etc/hosts</code>. Website berhasil diakses melalui
+        browser dengan tampilan yang sesuai.
+      </p>
+      <p>
+        Skill yang dipraktikkan meliputi administrasi Linux server, konfigurasi
+        web server Apache2, analisis log HTTP, dan manajemen DNS lokal — fondasi
+        penting dalam karir server/sysadmin maupun web security.
+      </p>
+    </div>
+
+    <footer>
+      <div class="container" style="padding: 0">
+        <span>Roma Yana Pasaribu</span> · Security Enthusiast · Bandung,
+        Indonesia · <span>2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

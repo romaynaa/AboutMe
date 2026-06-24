@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnlyCats — Project Documentation | Roma Yana Pasaribu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+         :root {
+            --bg: #0f1117;
+            --bg2: #161b27;
+            --bg3: #1c2333;
+            --line: #222d40;
+            --cyan: #38bdf8;
+            --green: #34d399;
+            --orange: #fb923c;
+            --red: #f87171;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --mono: "JetBrains Mono", monospace;
+            --sans: "Inter", sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* NAV */
+        
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 17, 23, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            padding: 0 24px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-back {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        
+        .nav-back:hover {
+            color: var(--orange);
+        }
+        
+        .nav-title {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--orange);
+        }
+        /* CONTAINER */
+        
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* HERO */
+        
+        .doc-hero {
+            padding: 56px 0 40px;
+            border-bottom: 1px solid var(--line);
+        }
+        
+        .doc-hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--orange);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .doc-hero-eyebrow::before {
+            content: "";
+            width: 24px;
+            height: 1px;
+            background: var(--orange);
+            display: inline-block;
+        }
+        
+        .doc-hero h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        
+        .doc-hero h1 span {
+            color: var(--orange);
+        }
+        
+        .doc-hero-desc {
+            font-size: 15px;
+            color: var(--muted);
+            max-width: 560px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            background: var(--bg3);
+            color: var(--muted);
+        }
+        
+        .badge.orange {
+            color: var(--orange);
+            border-color: rgba(251, 146, 60, 0.25);
+            background: rgba(251, 146, 60, 0.05);
+        }
+        
+        .badge.cyan {
+            color: var(--cyan);
+            border-color: rgba(56, 189, 248, 0.25);
+            background: rgba(56, 189, 248, 0.05);
+        }
+        
+        .badge.green {
+            color: var(--green);
+            border-color: rgba(52, 211, 153, 0.25);
+            background: rgba(52, 211, 153, 0.05);
+        }
+        /* SECTIONS */
+        
+        .doc-section {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        
+        .section-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--orange);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-label::before {
+            content: "";
+            width: 20px;
+            height: 1px;
+            background: var(--orange);
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+        /* OVERVIEW GRID */
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        
+        @media (max-width: 600px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .overview-card {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 18px 20px;
+        }
+        
+        .overview-card-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        
+        .overview-card-value {
+            font-size: 14px;
+            color: var(--text);
+            font-weight: 500;
+        }
+        /* ROLE HIGHLIGHT */
+        
+        .role-box {
+            background: rgba(251, 146, 60, 0.06);
+            border: 1px solid rgba(251, 146, 60, 0.2);
+            border-radius: 8px;
+            padding: 20px 22px;
+            margin-bottom: 24px;
+        }
+        
+        .role-box-title {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--orange);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .role-box p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        
+        .role-box strong {
+            color: var(--text);
+        }
+        /* FLOW */
+        
+        .flow-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .flow-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        
+        .flow-num {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--orange);
+            background: rgba(251, 146, 60, 0.1);
+            border: 1px solid rgba(251, 146, 60, 0.2);
+            border-radius: 4px;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        
+        .flow-text {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            padding-top: 3px;
+        }
+        
+        .flow-text strong {
+            color: var(--text);
+        }
+        /* SCREENSHOTS */
+        
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .screenshot-item {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: var(--bg2);
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        
+        .screenshot-item:hover {
+            border-color: var(--orange);
+            transform: translateY(-3px);
+        }
+        
+        .screenshot-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+        
+        .screenshot-caption {
+            padding: 10px 14px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .screenshot-caption::before {
+            content: "◆";
+            font-size: 7px;
+            color: var(--orange);
+        }
+        /* STACK */
+        
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        
+        .stack-item {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .stack-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .stack-info-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .stack-info-role {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+        /* TEAM */
+        
+        .team-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .team-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px 18px;
+        }
+        
+        .team-item.me {
+            border-color: rgba(251, 146, 60, 0.3);
+            background: rgba(251, 146, 60, 0.04);
+        }
+        
+        .team-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--bg3);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+        
+        .team-item.me .team-avatar {
+            background: rgba(251, 146, 60, 0.1);
+            border-color: rgba(251, 146, 60, 0.3);
+            color: var(--orange);
+        }
+        
+        .team-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .team-role {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+        
+        .team-item.me .team-role {
+            color: var(--orange);
+        }
+        
+        .team-nim {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            margin-left: auto;
+        }
+        /* LIGHTBOX */
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.open {
+            display: flex;
+        }
+        
+        .lightbox img {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+        }
+        
+        .lightbox-close {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            font-size: 26px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            opacity: 0.6;
+            line-height: 1;
+        }
+        
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+        /* FOOTER */
+        
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+        }
+        
+        footer a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <nav>
+        <a href="../index.html#projects" class="nav-back">← Back to Portfolio</a
+      >
+      <div class="nav-title">OnlyCats · Docs</div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="container">
+      <div class="doc-hero">
+        <div class="doc-hero-eyebrow">Web Development · Telkom University</div>
+        <h1><span>OnlyCats</span> — Cat Rescue &amp; Adoption Platform</h1>
+        <p class="doc-hero-desc">
+          A web-based platform built to support street cat rescue, care, and
+          adoption. Developed as a final project for the Web Programming course
+          using Laravel by a team of 5.
+        </p>
+        <div class="badge-row">
+          <span class="badge orange">Laravel</span>
+          <span class="badge orange">MySQL</span>
+          <span class="badge cyan">HTML / CSS / JS</span>
+          <span class="badge cyan">XAMPP / Laragon</span>
+          <span class="badge green">Figma</span>
+          <span class="badge green">GitHub</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="container">
+      <div class="doc-section">
+        <div class="section-label">Overview</div>
+        <div class="section-title">About the Project</div>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <div class="overview-card-label">Course</div>
+            <div class="overview-card-value">Web Programming</div>
+          </div>
+        </div>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.8">
+          OnlyCats is a web-based information system designed to bridge the
+          process of rescuing and adopting stray cats. It supports three main
+          roles: <strong style="color: var(--text)">Visitor</strong> (view
+          general info),
+          <strong style="color: var(--text)">User</strong> (report rescues &
+          apply for adoption), and
+          <strong style="color: var(--text)">Admin</strong> (manage data &
+          verify requests).
+        </p>
+      </div>
+    </div>
+
+    <!-- MY ROLE -->
+    <div class="container">
+      <div class="doc-section">
+        <div class="section-label">My Contribution</div>
+        <div class="section-title">Adoption Feature</div>
+        <div class="role-box">
+          <div class="role-box-title">My Role — Adoption Feature</div>
+          <p>
+            I was responsible for the
+            <strong>entire Adoption feature flow</strong>, from the user side to
+            the admin side. This includes adoption requests, admin verification,
+            real-time status updates, and the user's adoption history page.
+          </p>
+        </div>
+        <div class="flow-list">
+          <div class="flow-item">
+            <div class="flow-num">1</div>
+            <div class="flow-text">
+              <strong>Adoption Catalog (User)</strong> — Users browse the list
+              of available cats on the Adopt page, with photos and basic cat
+              information.
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num">2</div>
+            <div class="flow-text">
+              <strong>Adoption Request (User)</strong> — Users select a cat and
+              fill in an adoption request form with their reason (Reason/Notes).
+              Data is saved to the database with a <em>pending</em> status.
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num">3</div>
+            <div class="flow-text">
+              <strong>Admin Verification</strong> — Admin receives all requests
+              on the Adoption Requests page. Admin can view cat & adopter
+              details, then choose to <em>Approve</em> or <em>Reject</em> with
+              an optional note.
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num">4</div>
+            <div class="flow-text">
+              <strong>Real-Teame Status (User)</strong> — The admin's decision
+              instantly appears on the user's <em>My Adoption</em> page. Status
+              updates to <strong>APPROVED</strong> (green) or
+              <strong>REJECTED</strong> (red) along with the admin's note.
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num">5</div>
+            <div class="flow-text">
+              <strong>Admin Dashboard Stats</strong> — Approved Adoptions &
+              Pending Adoptions statistics are automatically updated on the
+              Admin Dashboard as a system data summary.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="container">
+      <div class="doc-section">
+        <div class="section-label">Documentation</div>
+        <div class="section-title">Feature Screenshots</div>
+        <div class="screenshots-grid">
+          <div
+            class="screenshot-item"
+            onclick="openLightbox('assets/onlycats-adoption-requests.png')"
+          >
+            <img
+              src="assets/onlycats-adoption-requests.png"
+              alt="Adoption Requests Admin"
+              onerror="
+                this.style.height = '120px';
+                this.style.background = '#1c2333';
+              "
+            />
+            <div class="screenshot-caption">Adoption Requests — Admin View</div>
+          </div>
+          <div
+            class="screenshot-item"
+            onclick="openLightbox('../assets/onlycats-my-adoption.png')"
+          >
+            <img
+              src="assets/onlycats-my-adoption.png"
+              alt="My Adoption User"
+              onerror="
+                this.style.height = '120px';
+                this.style.background = '#1c2333';
+              "
+            />
+            <div class="screenshot-caption">My Adoption — User View</div>
+          </div>
+          <div
+            class="screenshot-item"
+            onclick="openLightbox('../assets/onlycats-admin-dashboard.png')"
+          >
+            <img
+              src="assets/onlycats-admin-dashboard.png"
+              alt="Admin Dashboard"
+              onerror="
+                this.style.height = '120px';
+                this.style.background = '#1c2333';
+              "
+            />
+            <div class="screenshot-caption">Admin Dashboard</div>
+          </div>
+          <div
+            class="screenshot-item"
+            onclick="openLightbox('../assets/onlycats-system-reports.png')"
+          >
+            <img
+              src="assets/onlycats-system-reports.png"
+              alt="System Reports"
+              onerror="
+                this.style.height = '120px';
+                this.style.background = '#1c2333';
+              "
+            />
+            <div class="screenshot-caption">
+              System Reports — Data Statistics
+            </div>
+          </div>
+          <div
+            class="screenshot-item"
+            onclick="openLightbox('../assets/onlycats-ready-adoption.png')"
+          >
+            <img
+              src="assets/onlycats-ready-adoption.png"
+              alt="Ready for Adoption"
+              onerror="
+                this.style.height = '120px';
+                this.style.background = '#1c2333';
+              "
+            />
+            <div class="screenshot-caption">Ready for Adoption</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STACK -->
+    <div class="container">
+      <div class="doc-section">
+        <div class="section-label">Tech Stack</div>
+        <div class="section-title">Technologies Used</div>
+        <div class="stack-grid">
+          <div class="stack-item">
+            <div class="stack-icon">🔧</div>
+            <div>
+              <div class="stack-info-name">Laravel</div>
+              <div class="stack-info-role">Backend Framework</div>
+            </div>
+          </div>
+          <div class="stack-item">
+            <div class="stack-icon">🗄️</div>
+            <div>
+              <div class="stack-info-name">MySQL</div>
+              <div class="stack-info-role">Database</div>
+            </div>
+          </div>
+          <div class="stack-item">
+            <div class="stack-icon">🎨</div>
+            <div>
+              <div class="stack-info-name">HTML / CSS / JS</div>
+              <div class="stack-info-role">Frontend</div>
+            </div>
+          </div>
+          <div class="stack-item">
+            <div class="stack-icon">🖥️</div>
+            <div>
+              <div class="stack-info-name">XAMPP / Laragon</div>
+              <div class="stack-info-role">Local Server</div>
+            </div>
+          </div>
+          <div class="stack-item">
+            <div class="stack-icon">🎯</div>
+            <div>
+              <div class="stack-info-name">Figma</div>
+              <div class="stack-info-role">UI/UX Design</div>
+            </div>
+          </div>
+          <div class="stack-item">
+            <div class="stack-icon">📦</div>
+            <div>
+              <div class="stack-info-name">GitHub</div>
+              <div class="stack-info-role">Version Control</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <a href="../portfolio.html">← Back to Portfolio</a> · Roma Yana Pasaribu · 2025
+        </div>
+        </footer>
+
+        <!-- LIGHTBOX -->
+        <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+            <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+            <img id="lightbox-img" src="" alt="Screenshot" />
+        </div>
+
+        <script>
+            function openLightbox(src) {
+                document.getElementById("lightbox-img").src = src;
+                document.getElementById("lightbox").classList.add("open");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeLightbox() {
+                document.getElementById("lightbox").classList.remove("open");
+                document.body.style.overflow = "";
+            }
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeLightbox();
+            });
+        </script>
+</body>
+
+</html>

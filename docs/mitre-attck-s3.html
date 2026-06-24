@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MITRE ATT&CK: AWS S3 Data Breach | Roma Yana Pasaribu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --bg2: #161b27;
+        --bg3: #1c2333;
+        --line: #222d40;
+        --cyan: #38bdf8;
+        --red: #f87171;
+        --green: #34d399;
+        --amber: #fbbf24;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Inter", sans-serif;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 24px 100px;
+      }
+
+      .back-link {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--cyan);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 32px;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      .header-tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--cyan);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: clamp(24px, 4vw, 34px);
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 36px;
+      }
+      /* Impact stats row */
+
+      .impact-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: 32px 0;
+      }
+
+      .impact-box {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+      }
+
+      .impact-box .num {
+        font-family: var(--mono);
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--red);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .impact-box .lbl {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      h2 {
+        font-size: 17px;
+        font-weight: 600;
+        color: #fff;
+        margin: 44px 0 14px;
+        letter-spacing: -0.01em;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 14px;
+      }
+      /* Attack flow timeline */
+
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 20px 0;
+      }
+
+      .flow-step {
+        flex: 1;
+        min-width: 100px;
+        padding: 14px 12px;
+        border-right: 1px solid var(--line);
+        text-align: center;
+      }
+
+      .flow-step:last-child {
+        border-right: none;
+      }
+
+      .flow-step .tactic {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--red);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .flow-step .tid {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .flow-step .label {
+        font-size: 12px;
+        color: var(--text);
+        line-height: 1.3;
+        font-weight: 500;
+      }
+      /* Tactic cards */
+
+      .tactic-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .tactic-card {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .tactic-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg3);
+      }
+
+      .tactic-id {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--red);
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid rgba(248, 113, 113, 0.2);
+        padding: 3px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+
+      .tactic-name {
+        font-weight: 600;
+        font-size: 15px;
+        color: #fff;
+      }
+
+      .tactic-body {
+        padding: 18px 20px;
+      }
+
+      .tactic-body p {
+        margin-bottom: 10px;
+      }
+
+      .tri-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .tri-box {
+        background: var(--bg3);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+      }
+
+      .tri-box .tri-head {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tri-box.ioc .tri-head {
+        color: var(--red);
+      }
+
+      .tri-box.ioa .tri-head {
+        color: var(--amber);
+      }
+
+      .tri-box.det .tri-head {
+        color: var(--green);
+      }
+
+      .tri-box ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .tri-box ul li {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        padding-left: 12px;
+        position: relative;
+        line-height: 1.5;
+      }
+
+      .tri-box.ioc ul li::before {
+        content: "•";
+        color: var(--red);
+        position: absolute;
+        left: 0;
+      }
+
+      .tri-box.ioa ul li::before {
+        content: "•";
+        color: var(--amber);
+        position: absolute;
+        left: 0;
+      }
+
+      .tri-box.det ul li::before {
+        content: "✓";
+        color: var(--green);
+        position: absolute;
+        left: 0;
+        font-size: 10px;
+      }
+
+      .technique-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 10px 0 14px;
+      }
+
+      .technique-tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--cyan);
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 3px 10px;
+        border-radius: 4px;
+      }
+      /* Mitigation section */
+
+      .mitigation-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 14px 0;
+      }
+
+      .mitigation-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px 16px;
+      }
+
+      .mit-num {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--green);
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-weight: 600;
+      }
+
+      .mit-text {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 60px;
+      }
+
+      .figure {
+        margin: 20px 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg2);
+      }
+
+      .figure img {
+        width: 100%;
+        display: block;
+      }
+
+      .figure-caption {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        padding: 10px 16px;
+        border-top: 1px solid var(--line);
+        background: var(--bg3);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .figures-col {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      /* IOC table */
+
+      @media (max-width: 680px) {
+        .impact-row {
+          grid-template-columns: 1fr 1fr;
+        }
+        .tri-col {
+          grid-template-columns: 1fr;
+        }
+        .flow-step {
+          min-width: 80px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <a href="../index.html#projects" class="back-link">← Back to Portfolio</a>
+
+      <div class="header-tag">
+        Threat Intelligence · MITRE ATT&amp;CK · Blue Team
+      </div>
+      <h1>AWS S3 Data Breach Analysis</h1>
+      <p class="subtitle">MITRE ATT&amp;CK Cloud Matrix v14</p>
+
+      <!-- Impact Stats -->
+      <div class="impact-row">
+        <div class="impact-box">
+          <span class="num">10.000+</span>
+          <span class="lbl">Data pelanggan bocor</span>
+        </div>
+        <div class="impact-box">
+          <span class="num">7</span>
+          <span class="lbl">ATT&amp;CK Tactics terpetakan</span>
+        </div>
+        <div class="impact-box">
+          <span class="num">UU PDP</span>
+          <span class="lbl">Potensi denda Rp 20 M</span>
+        </div>
+        <div class="impact-box">
+          <span class="num">-20%</span>
+          <span class="lbl">Penurunan penjualan</span>
+        </div>
+      </div>
+
+      <!-- Executive Summary -->
+      <h2>Executive Summary</h2>
+      <p>
+        Sebuah perusahaan e-commerce besar di Jakarta menggunakan AWS S3 bucket
+        untuk menyimpan data pelanggan. Bucket tersebut memiliki
+        misconfiguration serius:
+        <strong style="color: var(--red)">Block Public Access DISABLED</strong>
+        dan ACL AllUsers:READ aktif akibat kesalahan konfigurasi tim DevOps.
+        Threat actor mengeksploitasi celah ini menggunakan automated scanning
+        tools, mengakses bucket tanpa autentikasi, dan melakukan exfiltration
+        massal 10.000+ record pelanggan — termasuk nama, alamat, dan nomor kartu
+        kredit — ke server eksternal, yang kemudian dijual di dark web.
+      </p>
+      <p>
+        Laporan ini memetakan seluruh rantai serangan menggunakan
+        <strong style="color: var(--cyan)"
+          >MITRE ATT&amp;CK Cloud Matrix v14</strong
+        >, meliputi IOC, IOA, TTP, dan rekomendasi deteksi/pencegahan per
+        tactic.
+      </p>
+
+      <!-- Attack Flow -->
+      <h2>Attack Flow Diagram</h2>
+      <div class="figure">
+        <img
+          src="assets/diagram-flow-attack.png"
+          alt="msfvenom payload generation command"
+        />
+      </div>
+
+      <!-- Per-Tactic Analysis -->
+      <h2>Analisis TTP per Tactic</h2>
+      <div class="tactic-grid">
+        <!-- RECON -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0043</span>
+            <span class="tactic-name">Reconnaissance</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor menggunakan automated scanning tools untuk menemukan
+              S3 bucket publik milik perusahaan di region
+              <code style="color: var(--cyan)">ap-southeast-1</code> (Jakarta).
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1595.002 — Active Scanning: Vuln Scan</span
+              >
+              <span class="technique-tag"
+                >T1596 — Search Open Tech Databases</span
+              >
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>IP scanner: 45.33.x.x (Shodan-like range)</li>
+                  <li>DNS query burst ke s3.amazonaws.com</li>
+                  <li>User-Agent mencurigakan (python-scanner)</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Port scanning masif dari 1 IP dalam &lt;60 detik</li>
+                  <li>Pola query otomatis ke endpoint AWS publik</li>
+                  <li>Frekuensi request &gt;500 req/menit</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>Aktifkan AWS WAF rate limiting</li>
+                  <li>Monitor dengan Amazon GuardDuty</li>
+                  <li>Blokir IP scanner via NACL</li>
+                  <li>Alert: scan &gt;200 req/menit dari 1 IP</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESOURCE DEV -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0042</span>
+            <span class="tactic-name">Resource Development</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor menyiapkan infrastruktur operasi: VPS anonim, tools
+              exfiltration, dan cloud account untuk menampung data curian.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1583.001 — Acquire: Virtual Private Server</span
+              >
+              <span class="technique-tag"
+                >T1588.002 — Obtain Tool: aws-cli, S3Scanner</span
+              >
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>VPS dari provider anonim (AS di RU/NL)</li>
+                  <li>aws-cli diinstall di server baru</li>
+                  <li>Koneksi dari Tor exit node saat setup</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Pembuatan resource cloud baru tanpa aktivitas bisnis</li>
+                  <li>Download tool hacking dari repo publik</li>
+                  <li>Pembayaran anonim (crypto)</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>Threat intel feed: monitor IP Tor exit node</li>
+                  <li>Deteksi download tools via endpoint monitoring</li>
+                  <li>CTI sharing: subscribe ke feed IOC komunitas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INITIAL ACCESS -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0001</span>
+            <span class="tactic-name">Initial Access</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor mengakses S3 bucket langsung tanpa autentikasi karena
+              <strong style="color: var(--red)"
+                >misconfiguration: Block Public Access DISABLED</strong
+              >
+              dan ACL AllUsers:READ aktif.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1190 — Exploit Public-Facing Application</span
+              >
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>Principal: ANONYMOUS di CloudTrail log</li>
+                  <li>ListBuckets dari IP non-whitelisted</li>
+                  <li>Akses ke s3://[bucket]/customers/ tanpa auth</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>First-time access dari IP asing ke bucket sensitif</li>
+                  <li>ListObjects API call tanpa sesi autentikasi</li>
+                  <li>Akses jam tidak wajar (02:00–04:00 WIB)</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>AWS Config: s3-bucket-public-read-prohibited</li>
+                  <li>Aktifkan S3 Block Public Access di level account</li>
+                  <li>Alert: CloudTrail event Principal = ANONYMOUS</li>
+                  <li>Audit ACL bucket mingguan</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DISCOVERY -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0007</span>
+            <span class="tactic-name">Discovery</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor melakukan enumerasi seluruh objek di bucket untuk
+              mengidentifikasi data bernilai tinggi sebelum pengambilan massal.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1619 — Cloud Storage Object Discovery</span
+              >
+              <span class="technique-tag">T1526 — Cloud Service Discovery</span>
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>aws s3 ls s3://[bucket] berulang kali</li>
+                  <li>ListObjects API call dalam jumlah besar</li>
+                  <li>Akses ke /customers, /orders, /payments</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Enumerasi total bucket dalam waktu singkat</li>
+                  <li>Pattern akses sistematik ke semua subfolder</li>
+                  <li>GetBucketAcl + GetBucketPolicy API calls</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>CloudTrail: ListObjects &gt;100x dalam 5 menit</li>
+                  <li>AWS Macie: deteksi sensitive data discovery</li>
+                  <li>Amazon Detective untuk pattern analisis</li>
+                  <li>Alert anomali jumlah API calls per session</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLECTION -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0009</span>
+            <span class="tactic-name">Collection</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor mengunduh seluruh file pelanggan secara massal: nama,
+              alamat, nomor kartu kredit, dan data sensitif lainnya dari 10.000+
+              record.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1530 — Data from Cloud Storage Object</span
+              >
+              <span class="technique-tag"
+                >T1213 — Data from Information Repositories</span
+              >
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>aws s3 sync s3://[bucket] ./dump/ command</li>
+                  <li>GetObject API burst &gt;1000 req/menit</li>
+                  <li>Transfer data &gt;10 GB dalam 1 sesi</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Download massal seluruh objek sekaligus</li>
+                  <li>Pola wget/curl otomatis ke endpoint S3</li>
+                  <li>Volume transfer jauh di atas baseline</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>AWS Macie: klasifikasi &amp; alert PII data access</li>
+                  <li>CloudWatch: GetObject per menit metric</li>
+                  <li>DLP alert: download &gt;1 GB data sensitif / jam</li>
+                  <li>S3 Access Logs untuk forensik detail</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C2 -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0011</span>
+            <span class="tactic-name">Command &amp; Control</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor membangun channel komunikasi terenkripsi ke server
+              eksternal (VPS) sebagai staging point sebelum data dijual di dark
+              web.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1071.001 — App Layer Protocol: Web (HTTPS)</span
+              >
+              <span class="technique-tag">T1573 — Encrypted Channel</span>
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>Koneksi HTTPS ke IP VPS anonim (RU/NL)</li>
+                  <li>Sertifikat TLS self-signed pada server C2</li>
+                  <li>Traffic ke domain baru terdaftar &lt;30 hari</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Beaconing reguler ke IP asing setiap N menit</li>
+                  <li>Encrypted channel tidak umum dari environment S3</li>
+                  <li>Outbound ke IP tanpa reputasi bisnis</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>DNS filtering: blokir domain baru/suspicious</li>
+                  <li>SIEM: korelasi S3 access + outbound HTTPS asing</li>
+                  <li>Threat intel: check IP reputasi secara otomatis</li>
+                  <li>VPC Flow Logs: monitor koneksi outbound</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXFILTRATION -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0010</span>
+            <span class="tactic-name">Exfiltration</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              Threat actor mentransfer data yang sudah dikumpulkan ke cloud
+              storage eksternal miliknya, dikompresi terlebih dahulu untuk
+              menghindari deteksi volume transfer.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1537 — Transfer Data to Cloud Account</span
+              >
+              <span class="technique-tag"
+                >T1030 — Data Transfer Size Limits</span
+              >
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>Upload ke S3 bucket eksternal di akun berbeda</li>
+                  <li>File .zip / .tar.gz tidak biasa dari server</li>
+                  <li>Aktivitas PutObject ke bucket tidak dikenal</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Outbound transfer &gt;10 GB ke 1 IP tujuan</li>
+                  <li>Kompresi massal sebelum transfer</li>
+                  <li>Aktivitas upload di luar jam kerja</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>AWS VPC Flow Logs: alert outbound &gt;5 GB</li>
+                  <li>Network DLP: inspect transfer data PII</li>
+                  <li>SIEM: S3 access + large outbound = alert</li>
+                  <li>Laporan ke BSSN &amp; OJK dalam 14 hari (UU PDP)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMPACT -->
+        <div class="tactic-card">
+          <div class="tactic-header">
+            <span class="tactic-id">TA0040</span>
+            <span class="tactic-name">Impact</span>
+          </div>
+          <div class="tactic-body">
+            <p>
+              10.000+ data pelanggan bocor dan dijual di dark web. Perusahaan
+              menghadapi denda UU PDP, fraud kartu kredit massal, hilang
+              kepercayaan, dan penurunan penjualan 20%.
+            </p>
+            <div class="technique-tags">
+              <span class="technique-tag"
+                >T1565.001 — Stored Data Manipulation</span
+              >
+              <span class="technique-tag"
+                >T1486 — Data Encrypted / Sold for Impact</span
+              >
+            </div>
+            <div class="tri-col">
+              <div class="tri-box ioc">
+                <div class="tri-head">IOC</div>
+                <ul>
+                  <li>Data pelanggan muncul di BreachForums</li>
+                  <li>Hash dump file cocok dengan data internal</li>
+                  <li>Laporan fraud CC massal dari bank penerbit</li>
+                </ul>
+              </div>
+              <div class="tri-box ioa">
+                <div class="tri-head">IOA</div>
+                <ul>
+                  <li>Volume complaint fraud pelanggan melonjak</li>
+                  <li>Mention nama perusahaan di dark web monitoring</li>
+                  <li>Notifikasi dari threat intel (HIBP/MISP)</li>
+                </ul>
+              </div>
+              <div class="tri-box det">
+                <div class="tri-head">Deteksi / Pencegahan</div>
+                <ul>
+                  <li>Daftarkan domain ke Have I Been Pwned (HIBP)</li>
+                  <li>Pasang dark web monitoring (Recorded Future)</li>
+                  <li>Aktifkan fraud alert bersama bank issuer CC</li>
+                  <li>Laporan ke BSSN &amp; OJK max 14 hari (UU PDP Ps.46)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end tactic-grid -->
+
+      <!-- Mitigations -->
+      <h2>Rekomendasi Mitigasi Utama</h2>
+      <div class="mitigation-list">
+        <div class="mitigation-item">
+          <span class="mit-num">1</span>
+          <span class="mit-text"
+            >Aktifkan <strong>S3 Block Public Access</strong> di level account —
+            bukan hanya per bucket — agar tidak bisa di-override oleh
+            konfigurasi bucket individual.</span
+          >
+        </div>
+        <div class="mitigation-item">
+          <span class="mit-num">2</span>
+          <span class="mit-text"
+            >Implementasi <strong>AWS Config rules</strong> otomatis (<code
+              style="color: var(--cyan)"
+              >s3-bucket-public-read-prohibited</code
+            >) untuk audit kontinyu dan auto-remediation bucket yang tiba-tiba
+            public.</span
+          >
+        </div>
+        <div class="mitigation-item">
+          <span class="mit-num">3</span>
+          <span class="mit-text"
+            >Pasang <strong>AWS Macie</strong> untuk klasifikasi data sensitif
+            (PII, kartu kredit) dan trigger alert otomatis saat data tersebut
+            diakses secara anomali.</span
+          >
+        </div>
+        <div class="mitigation-item">
+          <span class="mit-num">4</span>
+          <span class="mit-text"
+            >Enkripsi S3 wajib menggunakan <strong>SSE-KMS</strong> untuk semua
+            bucket berisi data pelanggan — sehingga data tidak bisa dibaca
+            meskipun berhasil didownload.</span
+          >
+        </div>
+        <div class="mitigation-item">
+          <span class="mit-num">5</span>
+          <span class="mit-text"
+            >Lakukan
+            <strong>penetration testing dan audit konfigurasi cloud</strong>
+            secara berkala (minimal bulanan) mencakup semua bucket, IAM policy,
+            dan VPC rules.</span
+          >
+        </div>
+        <div class="mitigation-item">
+          <span class="mit-num">6</span>
+          <span class="mit-text"
+            >Buat <strong>Incident Response Plan</strong> sesuai UU PDP —
+            termasuk prosedur notifikasi ke BSSN dan OJK dalam maksimal 14 hari
+            sejak pelanggaran terdeteksi (Pasal 46).</span
+          >
+        </div>
+      </div>
+
+      <footer>
+        Roma Yana Pasaribu · MITRE ATT&amp;CK AWS S3 Data Breach · Dibimbing.id
+        Bootcamp
+      </footer>
+    </div>
+  </body>
+</html>

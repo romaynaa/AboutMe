@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnlyCats Mobile (Admin) Documentation | Roma Yana Pasaribu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --bg2: #161b27;
+        --bg3: #1c2333;
+        --line: #222d40;
+        --cyan: #38bdf8;
+        --green: #34d399;
+        --orange: #fb923c;
+        --red: #f87171;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Inter", sans-serif;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 60px 24px 100px;
+      }
+
+      .back-link {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--orange);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 32px;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      .header-tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--orange);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: clamp(24px, 4vw, 34px);
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 36px;
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin: 44px 0 14px;
+        letter-spacing: -0.01em;
+      }
+
+      h3 {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--orange);
+        margin: 28px 0 10px;
+        font-family: var(--mono);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 14px;
+      }
+
+      .role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(251, 146, 60, 0.1);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        border-radius: 6px;
+        padding: 8px 16px;
+        margin: 16px 0;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--orange);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 20px 0;
+      }
+
+      .summary-box {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px 18px;
+      }
+
+      .summary-box .lbl {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      .summary-box .val {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--green);
+      }
+      /* Stack table */
+
+      .stack-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 13px;
+      }
+
+      .stack-table th {
+        background: var(--bg3);
+        border: 1px solid var(--line);
+        padding: 10px 14px;
+        text-align: left;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--orange);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .stack-table td {
+        border: 1px solid var(--line);
+        padding: 10px 14px;
+        color: var(--muted);
+        vertical-align: top;
+      }
+
+      .stack-table td:first-child {
+        color: var(--text);
+        font-weight: 500;
+        width: 160px;
+      }
+
+      .stack-table td:nth-child(2) {
+        font-family: var(--mono);
+        color: var(--cyan);
+        font-size: 12px;
+      }
+
+      .stack-table tr:nth-child(even) td {
+        background: var(--bg2);
+      }
+      /* Unified phone grid — semua ukuran sama */
+
+      .phone-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 20px 0;
+      }
+
+      .phone-frame {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: 150px;
+        flex-shrink: 0;
+      }
+
+      .phone-img-wrap {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        width: 150px;
+        height: 310px;
+      }
+
+      .phone-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+      }
+
+      .phone-caption {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        text-align: center;
+        letter-spacing: 0.3px;
+        width: 150px;
+      }
+      /* Feature list */
+
+      .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 14px 0;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .feature-item::before {
+        content: "›";
+        color: var(--orange);
+        font-family: var(--mono);
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-size: 16px;
+      }
+      /* Tags */
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 16px 0;
+      }
+
+      .tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--orange);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.2);
+        border-radius: 4px;
+        padding: 4px 10px;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 60px;
+      }
+
+      footer span {
+        color: var(--orange);
+      }
+
+      @media (max-width: 600px) {
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <a href="../index.html#projects" class="back-link"
+        >&larr; Back to Portfolio</a
+      >
+
+      <div class="header-tag">Web & Mobile Development · Telkom University</div>
+      <h1>OnlyCats Mobile — Cat Rescue & Adoption (Admin Panel)</h1>
+      <div class="subtitle">
+        Flutter · Firebase · Admin Dashboard · Mobile App
+      </div>
+
+      <p>
+        OnlyCats adalah platform mobile untuk mendukung rescue, perawatan, dan
+        adopsi kucing jalanan. Aplikasi ini memiliki dua sisi:
+        <strong style="color: var(--text)">User</strong> untuk pelaporan rescue
+        dan pengajuan adopsi, serta
+        <strong style="color: var(--text)">Admin Panel</strong> yang menjadi
+        fokus kontribusi saya — sebuah dashboard lengkap untuk mengelola seluruh
+        operasional platform.
+      </p>
+
+      <div class="role-badge">🛡 Role: Admin Panel Developer</div>
+
+      <div class="tags">
+        <span class="tag">Flutter</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Dart</span>
+        <span class="tag">Cloud Firestore</span>
+        <span class="tag">Firebase Auth</span>
+        <span class="tag">Open Street Maps</span>
+        <span class="tag">Figma</span>
+      </div>
+
+      <!-- PROJECT INFO -->
+      <h2>Project Overview</h2>
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="lbl">Platform</div>
+          <div class="val">Flutter (Android & iOS)</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Backend</div>
+          <div class="val">Cloud Firestore (Firebase)</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">My Contribution</div>
+          <div class="val">Admin Panel (full)</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Versi</div>
+          <div class="val">v1.0.0</div>
+        </div>
+      </div>
+
+      <!-- STACK TEKNOLOGI -->
+      <h2>Stack Teknologi</h2>
+      <table class="stack-table">
+        <thead>
+          <tr>
+            <th>Komponen</th>
+            <th>Teknologi</th>
+            <th>Fungsi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>UI Framework</td>
+            <td>Flutter (Dart)</td>
+            <td>Pengembangan antarmuka lintas platform</td>
+          </tr>
+          <tr>
+            <td>Backend / Database</td>
+            <td>Cloud Firestore (Firebase)</td>
+            <td>Penyimpanan data real-time (NoSQL)</td>
+          </tr>
+          <tr>
+            <td>Autentikasi</td>
+            <td>Firebase Authentication</td>
+            <td>Login, register, Google Sign-In, reset password</td>
+          </tr>
+          <tr>
+            <td>Penyimpanan File</td>
+            <td>Firebase Storage</td>
+            <td>Upload dan akses foto kucing & rescue</td>
+          </tr>
+          <tr>
+            <td>Notifikasi</td>
+            <td>flutter_local_notifications</td>
+            <td>Push notification lokal pada perangkat</td>
+          </tr>
+          <tr>
+            <td>Maps / Lokasi</td>
+            <td>Open Street Maps</td>
+            <td>Pemilihan lokasi rescue menggunakan peta</td>
+          </tr>
+          <tr>
+            <td>State Management</td>
+            <td>StatefulWidget (built-in Flutter)</td>
+            <td>Pengelolaan state per halaman</td>
+          </tr>
+          <tr>
+            <td>Desain UI/UX</td>
+            <td>Figma</td>
+            <td>Prototyping dan perancangan antarmuka</td>
+          </tr>
+          <tr>
+            <td>IDE</td>
+            <td>Android Studio, Visual Studio Code</td>
+            <td>Lingkungan pengembangan utama</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ADMIN PANEL FEATURES -->
+      <h2>Fitur Admin Panel (My Role)</h2>
+      <p>
+        Saya bertanggung jawab penuh atas pengembangan Admin Panel — mulai dari
+        desain UI di Figma hingga implementasi di Flutter dengan integrasi
+        Firebase. Berikut fitur-fitur yang saya bangun:
+      </p>
+
+      <!-- 1. DASHBOARD -->
+      <h3>1. Dashboard Utama & Insights</h3>
+      <p>
+        Halaman utama admin menampilkan ringkasan statistik (total kucing,
+        laporan rescue, adopsi) beserta navigasi ke seluruh menu administrasi.
+        Halaman Insights menyediakan data analitik operasional secara real-time
+        dari Firestore.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-dashboard.jpeg" alt="Admin Dashboard" />
+          </div>
+          <div class="phone-caption">Dashboard Utama — Menu Administrasi</div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-insights.jpeg" alt="Insights & Statistik" />
+          </div>
+          <div class="phone-caption">
+            Insights — Analitik & Status Operasional
+          </div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Ringkasan statistik: Total Kucing, Laporan Rescue, Total Adopsi,
+          Adopsi Pending
+        </div>
+        <div class="feature-item">
+          Status operasional rescue: Menunggu, Sedang Diproses, Telah Selesai
+        </div>
+        <div class="feature-item">
+          Aktivitas terkini dari Firestore real-time stream
+        </div>
+        <div class="feature-item">
+          Navigasi cepat ke semua modul administrasi
+        </div>
+      </div>
+
+      <!-- 2. RESCUE -->
+      <h3>2. Manajemen Laporan Rescue</h3>
+      <p>
+        Admin dapat melihat dan mengelola semua laporan rescue yang masuk.
+        Laporan dapat difilter berdasarkan status (Semua / Menunggu / Diproses /
+        Selesai) dan diperbarui statusnya langsung dari daftar.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-rescue.jpeg" alt="Laporan Rescue" />
+          </div>
+          <div class="phone-caption">
+            Laporan Rescue — Filter & Kelola Status
+          </div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-notifikasi.jpeg" alt="Notifikasi Admin" />
+          </div>
+          <div class="phone-caption">
+            Notifikasi — Rescue Baru & Adopsi Masuk
+          </div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Tab filter: Semua, Menunggu, Diproses, Selesai
+        </div>
+        <div class="feature-item">
+          Setiap laporan menampilkan foto, lokasi, kondisi kucing, nomor HP
+          pelapor
+        </div>
+        <div class="feature-item">
+          Update status rescue langsung dari card (dropdown)
+        </div>
+        <div class="feature-item">
+          Notifikasi push otomatis saat laporan rescue baru masuk
+        </div>
+      </div>
+
+      <!-- 3. INVENTORY -->
+      <h3>3. Inventory Kucing (CRUD)</h3>
+      <p>
+        Admin dapat mengelola data kucing yang tersedia untuk adopsi. Tersedia
+        fitur tambah, edit, dan hapus data kucing beserta upload foto ke
+        Firebase Storage dan pemilihan lokasi via peta.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-data-kucing.jpeg" alt="Daftar Kucing" />
+          </div>
+          <div class="phone-caption">Daftar Kucing</div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-tambah-kucing.jpeg" alt="Tambah Kucing" />
+          </div>
+          <div class="phone-caption">Tambah Kucing</div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-edit-kucing.jpeg" alt="Edit Kucing" />
+          </div>
+          <div class="phone-caption">Edit Kucing</div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Daftar kucing dengan nama, ras, umur, lokasi, dan status ketersediaan
+        </div>
+        <div class="feature-item">
+          Form tambah/edit: upload foto, nama, ras, umur, lokasi, warna, berat
+        </div>
+        <div class="feature-item">
+          Integrasi Open Street Maps untuk pilih titik lokasi via peta
+          interaktif
+        </div>
+        <div class="feature-item">
+          Upload foto ke Firebase Storage dengan preview langsung
+        </div>
+        <div class="feature-item">Hapus data kucing dengan konfirmasi</div>
+      </div>
+
+      <!-- 4. ADOPSI -->
+      <h3>4. Kelola Adopsi</h3>
+      <p>
+        Halaman ini menampilkan semua formulir adopsi yang masuk dari user.
+        Admin dapat menyetujui atau menolak pengajuan adopsi, dengan filter
+        berdasarkan status.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-adopsi.jpeg" alt="Kelola Adopsi" />
+          </div>
+          <div class="phone-caption">Kelola Adopsi — Approve / Reject</div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Tab filter: Semua, Menunggu, Disetujui, Ditolak
+        </div>
+        <div class="feature-item">
+          Data pengaju: nama, kucing yang diminta, lokasi, nomor telepon
+        </div>
+        <div class="feature-item">
+          Tombol approve/reject dengan update status real-time ke Firestore
+        </div>
+        <div class="feature-item">
+          Notifikasi otomatis dikirim ke user saat status berubah
+        </div>
+      </div>
+
+      <!-- 5. CHAT -->
+      <h3>5. Chat Masuk (Admin–User)</h3>
+      <p>
+        Fitur chat real-time memungkinkan admin berkomunikasi langsung dengan
+        user. Admin melihat semua percakapan aktif dalam satu daftar dan dapat
+        membalas pesan secara langsung.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-chat-list.jpeg" alt="Chat List" />
+          </div>
+          <div class="phone-caption">Daftar Chat Masuk</div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-chat-detail.jpeg" alt="Chat Detail" />
+          </div>
+          <div class="phone-caption">Detail Percakapan</div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Daftar semua percakapan dari user yang aktif beserta pesan terakhir
+        </div>
+        <div class="feature-item">
+          Real-time messaging dengan Cloud Firestore stream
+        </div>
+        <div class="feature-item">
+          Bubble chat dibedakan: pesan user (kiri) dan balasan admin (kanan)
+        </div>
+        <div class="feature-item">
+          Notifikasi push saat ada pesan baru dari user
+        </div>
+      </div>
+
+      <!-- 6. MANAJEMEN AKUN -->
+      <h3>6. Manajemen Akun Pengguna</h3>
+      <p>
+        Admin dapat melihat dan mengelola seluruh pengguna terdaftar, dengan
+        fitur pencarian berdasarkan nama atau email, serta hapus akun pengguna.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-akunmanagement.jpeg" alt="Manajemen Akun" />
+          </div>
+          <div class="phone-caption">Daftar Pengguna Terdaftar</div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Pencarian real-time berdasarkan nama atau email
+        </div>
+        <div class="feature-item">
+          Tampil: nama, email, username, dan bio pengguna
+        </div>
+        <div class="feature-item">Hapus akun pengguna dari Firebase</div>
+      </div>
+
+      <!-- 7. PENGATURAN ADMIN -->
+      <h3>7. Pengaturan & Profil Admin</h3>
+      <p>
+        Halaman akun admin menyediakan pengaturan profil pribadi dan keamanan
+        akun.
+      </p>
+      <div class="phone-grid">
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-akun.jpeg" alt="Halaman Akun" />
+          </div>
+          <div class="phone-caption">Halaman Akun Admin</div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-edit-profil.jpeg" alt="Edit Profil" />
+          </div>
+          <div class="phone-caption">Edit Profil Admin</div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-img-wrap">
+            <img src="assets/oc-ganti-pw.jpeg" alt="Ganti Password" />
+          </div>
+          <div class="phone-caption">Ganti Password</div>
+        </div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          Edit profil: nama lengkap, username, bio, foto profil
+        </div>
+        <div class="feature-item">
+          Ganti password dengan verifikasi password lama (maks. 5 percobaan)
+        </div>
+        <div class="feature-item">Pengaturan notifikasi push</div>
+        <div class="feature-item">
+          Tentang Aplikasi (v1.0.0) dan tombol Keluar
+        </div>
+      </div>
+
+      <!-- KESIMPULAN -->
+      <h2>Kesimpulan</h2>
+      <p>
+        Dalam project OnlyCats Mobile, saya membangun seluruh sisi Admin Panel —
+        mencakup 7 modul fungsional yang terintegrasi penuh dengan Firebase.
+        Pengerjaan meliputi desain UI di Figma, implementasi Flutter dengan
+        StatefulWidget, real-time data sync via Firestore, manajemen file di
+        Firebase Storage, dan sistem notifikasi lokal. Hasil akhir adalah admin
+        panel yang fungsional, responsif, dan siap digunakan untuk operasional
+        rescue & adopsi kucing.
+      </p>
+    </div>
+
+    <footer>
+      <div class="container" style="padding: 0">
+        <span>Roma Yana Pasaribu</span> · Web & Mobile Developer · Bandung,
+        Indonesia · <span>2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

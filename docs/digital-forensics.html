@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forensic Acquisition Documentation | Roma Yana Pasaribu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --bg2: #161b27;
+        --bg3: #1c2333;
+        --line: #222d40;
+        --cyan: #38bdf8;
+        --green: #34d399;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Inter", sans-serif;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 60px 24px 100px;
+      }
+
+      .back-link {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--cyan);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 32px;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      .header-tag {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--cyan);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: clamp(26px, 4vw, 36px);
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 36px;
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin: 40px 0 14px;
+        letter-spacing: -0.01em;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 14px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 20px 0;
+      }
+
+      .summary-box {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px 18px;
+      }
+
+      .summary-box .lbl {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      .summary-box .val {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--green);
+        word-break: break-all;
+      }
+
+      .figure {
+        margin: 24px 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg2);
+      }
+
+      .figure img {
+        width: 100%;
+        display: block;
+      }
+
+      .figure-caption {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted);
+        padding: 10px 16px;
+        border-top: 1px solid var(--line);
+        background: var(--bg3);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 14px 0 0;
+      }
+
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .step-item::before {
+        content: "→";
+        color: var(--cyan);
+        font-family: var(--mono);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .figures-col {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      @media (max-width: 680px) {
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 60px;
+      }
+
+      footer span {
+        color: var(--cyan);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <a href="../index.html#projects" class="back-link">&larr; Back</a>
+
+      <div class="header-tag">Digital Forensics</div>
+      <h1>Forensic Acquisition: USB Drive (7.3GB) using FTK Imager</h1>
+      <div class="subtitle">
+        Final project for the Cyber Security course, Telkom University
+      </div>
+
+      <p>
+        This project involved performing a complete forensic acquisition of a
+        7.3GB USB drive using Exterro FTK Imager, verifying the integrity of the
+        acquired image through hash matching, and recovering deleted files from
+        unallocated storage space.
+      </p>
+
+      <h2>Methodology</h2>
+      <div class="steps">
+        <div class="step-item">
+          Created a physical drive image (E01 format) of a TOSHIBA TransMemory
+          USB device (7.3GB / 15,137,280 sectors) using FTK Imager 8.2.0.26
+        </div>
+        <div class="step-item">
+          Computed MD5 and SHA1 hashes of the source drive during acquisition
+        </div>
+        <div class="step-item">
+          Ran the built-in verification process to compare computed hashes
+          against stored verification hashes and confirm no bad blocks existed
+          in the image
+        </div>
+        <div class="step-item">
+          Mounted and explored the acquired image's evidence tree, including the
+          unallocated space and recovery directories
+        </div>
+        <div class="step-item">
+          Recovered deleted JPEG image files from the "deleted images" /
+          recup_dir folders within unallocated space
+        </div>
+      </div>
+
+      <h2>Image Acquisition Summary</h2>
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="lbl">Drive Model</div>
+          <div class="val">TOSHIBA TransMemory USB Device</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">Source Data Size</div>
+          <div class="val">7391 MB (15,137,280 sectors)</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">MD5 Checksum</div>
+          <div class="val">69c9f37fc2f6baf0ed13e47c57c559a4</div>
+        </div>
+        <div class="summary-box">
+          <div class="lbl">SHA1 Checksum</div>
+          <div class="val">e35d73100744713cddbbaf00383c55a4d7ea76c9</div>
+        </div>
+      </div>
+
+      <div class="figures-col">
+        <div class="figure">
+          <img
+            src="assets/image-summary-1.png"
+            alt="FTK Imager image summary - case information"
+          />
+          <div class="figure-caption">Image Summary — Case Information</div>
+        </div>
+        <div class="figure">
+          <img
+            src="assets/image-summary-2.png"
+            alt="FTK Imager image summary - acquisition and verification result"
+          />
+          <div class="figure-caption">
+            Image Summary — Acquisition & Verification
+          </div>
+        </div>
+      </div>
+
+      <h2>Hash Verification</h2>
+      <p>
+        After acquisition, FTK Imager re-computed the MD5 and SHA1 hashes of the
+        image and compared them against the stored verification hashes embedded
+        during acquisition. Both checksums matched exactly, and no bad blocks
+        were found in the image, confirming the integrity of the acquired
+        evidence.
+      </p>
+      <div class="figure">
+        <img
+          src="assets/hash-verify.png"
+          alt="Drive Image Verify Results showing matched MD5 and SHA1 hashes"
+        />
+        <div class="figure-caption">
+          Drive / Image Verify Results — MD5 & SHA1 Match
+        </div>
+      </div>
+
+      <h2>Evidence Tree & Recovered Files</h2>
+      <p>
+        The acquired image was loaded into FTK Imager for examination. The
+        evidence tree exposed both the active "images" directory and a "deleted
+        images" directory recovered from unallocated space, containing fragments
+        and recovered files (e.g. monochrome bitmaps, recup_dir entries).
+      </p>
+      <div class="figure">
+        <img
+          src="assets/ftk-evidence-tree.png"
+          alt="FTK Imager evidence tree showing deleted images directories"
+        />
+        <div class="figure-caption">
+          Evidence Tree — Deleted Images Directories in Unallocated Space
+        </div>
+      </div>
+
+      <p>
+        Within the recovered "deleted images" directory, multiple JPEG files
+        were successfully recovered and previewed directly in FTK Imager,
+        confirming successful file recovery from unallocated space.
+      </p>
+      <div class="figure">
+        <img
+          src="assets/ftk-recovered-files.png"
+          alt="FTK Imager file list showing recovered JPEG files with preview"
+        />
+        <div class="figure-caption">
+          Recovered JPEG Files — File List & Preview
+        </div>
+      </div>
+
+      <h2>Conclusion</h2>
+      <p>
+        The forensic acquisition was completed successfully with full
+        chain-of-custody integrity, verified by matching MD5 and SHA1 hashes
+        between the source drive and the acquired image, with zero bad blocks
+        reported. Deleted image files were successfully recovered from
+        unallocated space, demonstrating practical application of forensic
+        imaging and data recovery techniques.
+      </p>
+    </div>
+
+    <footer>
+      <div class="container" style="padding: 0">
+        <span>Roma Yana Pasaribu</span> · Security Enthusiast · Bandung,
+        Indonesia · <span>2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

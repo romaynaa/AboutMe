@@ -1,0 +1,1763 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roma Yana Pasaribu | Security Enthusiast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+         :root {
+            --bg: #0f1117;
+            --bg2: #161b27;
+            --bg3: #1c2333;
+            --line: #222d40;
+            --cyan: #38bdf8;
+            --green: #34d399;
+            --orange: #fb923c;
+            --red: #f87171;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --mono: "JetBrains Mono", monospace;
+            --sans: "Inter", sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* NAV */
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(15, 17, 23, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            padding: 0 24px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--cyan);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-size: 13px;
+            color: var(--muted);
+            text-decoration: none;
+            font-family: var(--mono);
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        /* HERO */
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 56px;
+        }
+        /* Make container full width inside hero */
+        
+        .hero~*,
+        .hero .container {
+            width: 100%;
+        }
+        
+        .hero-inner {
+            padding: 80px 0 60px;
+            width: 100%;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            min-width: 0;
+        }
+        /* PROFILE PHOTO */
+        
+        .hero-photo-wrap {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+        
+        .hero-photo {
+            flex-shrink: 0;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--line);
+            background: var(--bg2);
+            box-shadow: 0 0 0 8px var(--bg2), 0 0 0 10px var(--line);
+        }
+        
+        .hero-photo img,
+        .hero-photo svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        @media (max-width: 860px) {
+            .hero-photo {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 680px) {
+            .hero-inner {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 28px;
+                padding: 60px 0 40px;
+            }
+            .hero-photo-wrap {
+                order: 1 !important;
+                align-items: center;
+            }
+            .hero-photo {
+                width: 140px;
+                height: 140px;
+                box-shadow: 0 0 0 5px var(--bg2), 0 0 0 7px var(--line);
+            }
+            .hero-text {
+                order: 2 !important;
+                text-align: center;
+                width: 100%;
+            }
+            .hero-tag {
+                justify-content: center;
+            }
+            .hero-btns {
+                justify-content: center;
+            }
+            .hero p {
+                max-width: 100%;
+            }
+        }
+        
+        @media (min-width: 681px) {
+            .hero-text {
+                order: 1 !important;
+            }
+            .hero-photo-wrap {
+                order: 2 !important;
+            }
+        }
+        
+        .hero-tag {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--green);
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+        
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+        
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .hero h1 span {
+            color: var(--cyan);
+        }
+        
+        .hero-role {
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 24px;
+            min-height: 22px;
+        }
+        
+        .hero-role .typed {
+            color: var(--cyan);
+        }
+        
+        .hero p {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 36px;
+            max-width: 500px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--cyan);
+            color: #0f1117;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background: #7dd3fc;
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+        /* SECTIONS */
+        
+        section {
+            padding: 80px 0;
+            border-top: 1px solid var(--line);
+        }
+        
+        .section-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 40px;
+            letter-spacing: -0.02em;
+        }
+        /* ABOUT */
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .about-text p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        
+        .about-text strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .stat-box {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .stat-box .num {
+            font-family: var(--mono);
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--cyan);
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .stat-box .lbl {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        /* SKILLS */
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .skill-group {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 24px;
+            transition: border-color 0.2s;
+        }
+        
+        .skill-group:hover {
+            border-color: var(--cyan);
+        }
+        
+        .skill-group-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .skill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .skill-group-name {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+        
+        .skill-desc {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            background: var(--bg3);
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+        /* PROJECTS */
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
+        }
+        /* Screenshot gallery */
+        
+        .project-screenshots {
+            display: flex;
+            gap: 6px;
+            padding: 12px 14px;
+            overflow-x: auto;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line);
+            scrollbar-width: thin;
+            scrollbar-color: var(--line) transparent;
+        }
+        
+        .project-screenshots img {
+            height: 90px;
+            width: auto;
+            border-radius: 5px;
+            border: 1px solid var(--line);
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+            object-fit: cover;
+        }
+        
+        .project-screenshots img:hover {
+            border-color: var(--orange);
+            transform: scale(1.04);
+        }
+        /* Lightbox */
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.open {
+            display: flex;
+        }
+        
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+        
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 24px;
+            font-size: 28px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            opacity: 0.7;
+        }
+        
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+        
+        .project-card {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .project-thumb {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
+            background: linear-gradient(135deg, var(--bg3), var(--bg2));
+            border-bottom: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-thumb::before {
+            content: "◆";
+            position: absolute;
+            font-size: 50px;
+            opacity: 0.06;
+        }
+        
+        .project-thumb span {
+            position: relative;
+            z-index: 1;
+            padding: 0 16px;
+            text-align: center;
+        }
+        
+        .project-body {
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .project-category {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        
+        .project-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .project-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+        
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        
+        .meta-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+        
+        .project-footer {
+            margin-top: auto;
+        }
+        
+        .btn-doc {
+            width: 100%;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 12px;
+            padding: 10px 0;
+            border-radius: 6px;
+            text-decoration: none;
+            background: var(--bg3);
+            color: var(--cyan);
+            border: 1px solid var(--line);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-doc:hover {
+            background: var(--cyan);
+            color: #0f1117;
+            border-color: var(--cyan);
+        }
+        
+        .btn-doc svg {
+            width: 13px;
+            height: 13px;
+        }
+        /* EVIDENCE BLOCK */
+        
+        .evidence-block {
+            border-top: 1px solid var(--line);
+            background: var(--bg3);
+            padding: 20px 28px;
+        }
+        
+        .evidence-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .evidence-label::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+        
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        
+        .evidence-item {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+        
+        .evidence-item-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        
+        .evidence-item-value {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        
+        .evidence-item-value.code {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--green);
+        }
+        /* EXPERIENCE */
+        
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .exp-item {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        
+        .exp-item:last-child {
+            border-bottom: none;
+        }
+        
+        .exp-date {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--muted);
+            padding-top: 3px;
+        }
+        
+        .exp-org {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .exp-role {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .exp-desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        
+        .exp-tags {
+            margin-top: 12px;
+        }
+        /* CONTACT */
+        
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        
+        .contact-intro p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 16px;
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .contact-link:hover {
+            border-color: var(--cyan);
+            color: var(--text);
+        }
+        
+        .contact-link-icon {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--cyan);
+            width: 20px;
+            flex-shrink: 0;
+        }
+        
+        .terminal {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .terminal-bar {
+            background: var(--bg3);
+            border-bottom: 1px solid var(--line);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        
+        .t-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+        
+        .terminal-body {
+            padding: 20px;
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 2;
+        }
+        
+        .t-prompt {
+            color: var(--cyan);
+        }
+        
+        .t-cmd {
+            color: var(--text);
+        }
+        
+        .t-out {
+            color: var(--green);
+            padding-left: 4px;
+        }
+        
+        .t-muted {
+            color: var(--muted);
+        }
+        
+        .t-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--cyan);
+            vertical-align: middle;
+            animation: blink 1.2s step-end infinite;
+        }
+        
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+        
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 28px 0;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        footer span {
+            color: var(--cyan);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: none;
+        }
+        /* HAMBURGER BUTTON */
+        
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 6px 8px;
+            flex-shrink: 0;
+        }
+        
+        .nav-hamburger span {
+            display: block;
+            height: 1.5px;
+            background: var(--muted);
+            border-radius: 2px;
+            transition: all 0.25s ease;
+            transform-origin: center;
+        }
+        
+        .nav-hamburger.open span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg);
+            background: var(--cyan);
+        }
+        
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        
+        .nav-hamburger.open span:nth-child(3) {
+            transform: translateY(-6.5px) rotate(-45deg);
+            background: var(--cyan);
+        }
+        /* MOBILE DROPDOWN */
+        
+        .nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 56px;
+            right: 16px;
+            z-index: 99;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            padding: 4px 0;
+            flex-direction: column;
+            min-width: 140px;
+            animation: slideDown 0.2s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        
+        .nav-dropdown.open {
+            display: flex;
+        }
+        
+        .nav-dropdown a {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: #334155;
+            text-decoration: none;
+            padding: 9px 18px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            transition: color 0.15s, background 0.15s;
+        }
+        
+        .nav-dropdown a:last-child {
+            border-bottom: none;
+        }
+        
+        .nav-dropdown a:hover {
+            color: #0f1117;
+            background: #f8fafc;
+        }
+        
+        @media (max-width: 680px) {
+            .about-grid,
+            .skills-grid,
+            .contact-wrap,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .exp-item {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-logo">roma.sec</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile dropdown -->
+    <div class="nav-dropdown" id="nav-dropdown">
+        <a href="#about" class="nav-drop-link">About</a>
+        <a href="#skills" class="nav-drop-link">Skills</a>
+        <a href="#projects" class="nav-drop-link">Projects</a>
+        <a href="#experience" class="nav-drop-link">Experience</a>
+        <a href="#contact" class="nav-drop-link">Contact</a>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <div class="hero-inner">
+
+                <!-- TEXT -->
+                <div class="hero-text" style="order: 2;">
+                    <div class="hero-tag">
+                        <span class="dot"></span>OPEN TO OPPORTUNITIES
+                    </div>
+                    <h1>Roma Yana<br /><span>Pasaribu</span></h1>
+                    <div class="hero-role">
+                        <span class="typed" id="typed"></span><span style="color:var(--cyan);font-family:var(--mono)">_</span>
+                    </div>
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+                    </div>
+                </div>
+
+                <!-- PROFILE PHOTO -->
+                <div class="hero-photo-wrap" style="order: 1;">
+                    <div class="hero-photo">
+                        <img src="docs/assets/profilephoto.jpeg" alt="Roma Yana Pasaribu" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="container fade-in">
+            <div class="section-title">About</div>
+            <div class="about-grid" style="grid-template-columns: 1fr">
+                <div class="about-text">
+                    <p>
+                        I'm an
+                        <strong>Information Technology student at Telkom University</strong
+              >, Bandung. I'm passionate about cybersecurity and software development, two fields that I actively explore both in academic settings and through hands-on bootcamp experience at Dibimbing.id.
+            </p>
+            <p>
+                In cybersecurity, my interest lies in both the offensive and defensive sides. I enjoy finding how systems can be broken, and equally how they can be defended and hardened. In development, I focus on building functional, real-world applications, particularly mobile apps using Flutter and Firebase.
+                    </p>
+                    <p>
+I believe the best way to learn is by doing. Every project I take on is treated seriously, documented thoroughly, and built with real tools in real environments not just theory.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="container fade-in">
+            <div class="section-title">Skills</div>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <div class="skill-group-header">
+                        <div class="skill-dot" style="background: var(--red)"></div>
+                        <div class="skill-group-name">RED TEAM</div>
+                    </div>
+                    <div class="skill-desc">
+                        Penetration Testing, Social Engineering, Network Vulnerability Assessment, SQL Injection, Credential Harvesting.
+                    </div>
+                    <div class="tags">
+                        <span class="tag" style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                ">Nmap</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                "
+                >Metasploit</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                "
+                >Burp Suite</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                "
+                >SQLMap</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                "
+                >SEToolkit</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                "
+                >OWASP ZAP</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--red);
+                  border-color: rgba(248, 113, 113, 0.2);
+                "
+                >Hydra</span
+              >
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-header">
+              <div class="skill-dot" style="background: var(--cyan)"></div>
+              <div class="skill-group-name">BLUE TEAM</div>
+            </div>
+            <div class="skill-desc">
+              Malware Analysis, Digital Forensics, Cryptographic Assessment, Log
+              Analysis, Apache Log Monitoring, Compliance & Regulatory
+              Standards.
+            </div>
+            <div class="tags">
+              <span
+                class="tag"
+                style="
+                  color: var(--cyan);
+                  border-color: rgba(56, 189, 248, 0.2);
+                "
+                >Wireshark</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--cyan);
+                  border-color: rgba(56, 189, 248, 0.2);
+                "
+                >FTK Imager</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--cyan);
+                  border-color: rgba(56, 189, 248, 0.2);
+                "
+                >VirusTotal</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--cyan);
+                  border-color: rgba(56, 189, 248, 0.2);
+                "
+                >Any.Run Sandbox</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--cyan);
+                  border-color: rgba(56, 189, 248, 0.2);
+                "
+                >Wazuh (SIEM)</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--cyan);
+                  border-color: rgba(56, 189, 248, 0.2);
+                "
+                >MITRE ATT&CK</span
+              >
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-header">
+              <div class="skill-dot" style="background: var(--green)"></div>
+              <div class="skill-group-name">STANDARDS & COMPLIANCE</div>
+            </div>
+            <div class="skill-desc">
+              Applied in academic projects and bootcamp assignments including
+              ISMS implementation case analysis.
+            </div>
+            <div class="tags">
+              <span
+                class="tag"
+                style="
+                  color: var(--green);
+                  border-color: rgba(52, 211, 153, 0.2);
+                "
+                >OWASP</span
+              >
+              <span
+                class="tag"
+                style="
+                  color: var(--green);
+                  border-color: rgba(52, 211, 153, 0.2);
+                "
+                >ISO/IEC 27001</span
+              >
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-header">
+              <div class="skill-dot" style="background: var(--muted)"></div>
+              <div class="skill-group-name">ENVIRONMENT & DEV</div>
+            </div>
+            <div class="skill-desc">
+              Linux system administration, server management, network
+              configuration, and supporting development knowledge.
+            </div>
+            <div class="tags">
+              <span class="tag">Bash</span>
+                        <span class="tag">Linux (Kali)</span>
+                        <span class="tag">Apache2</span>
+                        <span class="tag">Cisco Packet Tracer</span>
+                        <span class="tag">PHP / Laravel</span>
+                        <span class="tag">Dart / Flutter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="container fade-in">
+            <div class="section-title">Projects</div>
+
+            <!-- CYBERSECURITY -->
+            <div style="margin-bottom: 32px;">
+
+                <!-- RED TEAM -->
+                <div style="font-family: var(--mono); font-size: 12px; color: var(--red); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+                    <span style="width: 28px; height: 1px; background: var(--red); display: inline-block;"></span> Red Team
+                </div>
+                <div class="projects-grid">
+                    <!-- PROJECT 1: Web Pentest -->
+                    <div class="project-card" style="border-color: rgba(248,113,113,0.25);">
+                        <div class="project-thumb" style="background: linear-gradient(135deg, #1a0000 0%, #2a0a0a 100%); border-bottom-color: rgba(248,113,113,0.2);"><span style="color: var(--red);">Black-Box Pentest</span></div>
+                        <div class="project-body">
+                            <div class="project-category" style="color: var(--red);">
+                                Web Pentesting · Dibimbing.id Bootcamp
+                            </div>
+                            <div class="project-title">
+                                Black-Box Pentest: dibishop.duckdns.org
+                            </div>
+                            <p class="project-desc">
+                                Structured black-box penetration test against a live PHP-based e-commerce app. Found 4 vulnerabilities: session hijacking, IDOR, broken access control, and verbose error disclosure.
+                            </p>
+                            <div class="project-meta">
+                                <span class="meta-label">Tools:</span>
+                                <div class="tags">
+                                    <span class="tag">Nmap</span
+                  ><span class="tag">Burp Suite</span
+                  ><span class="tag">OWASP ZAP</span
+                  ><span class="tag">Wireshark</span>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <a href="docs/pentest-dibishop.html" target="_blank" class="btn-doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg> View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 3: Social Engineering -->
+                    <div class="project-card" style="border-color: rgba(248,113,113,0.25);">
+                        <div class="project-thumb" style="background: linear-gradient(135deg, #1a0000 0%, #2a0a0a 100%); border-bottom-color: rgba(248,113,113,0.2);"><span style="color: var(--red);">Phishing Simulation</span></div>
+                        <div class="project-body">
+                            <div class="project-category" style="color: var(--red);">
+                                Social Engineering · Dibimbing.id
+                            </div>
+                            <div class="project-title">
+                                Credential Harvesting via Phishing Simulation: GitHub Login Clone
+                            </div>
+                            <p class="project-desc">
+                                Simulated a real-world phishing attack using SEToolkit's Credential Harvester, cloning the GitHub login page to capture submitted credentials in a controlled lab.
+                            </p>
+                            <div class="project-meta">
+                                <span class="meta-label">Tools:</span>
+                                <div class="tags">
+                                    <span class="tag">SEToolkit</span
+                  ><span class="tag">Kali Linux</span>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <a href="docs/social-engineering.html" target="_blank" class="btn-doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg> View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end red team grid -->
+
+                <!-- BLUE TEAM -->
+                <div style="font-family: var(--mono); font-size: 12px; color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase; margin: 36px 0 16px; display: flex; align-items: center; gap: 10px;">
+                    <span style="width: 28px; height: 1px; background: var(--cyan); display: inline-block;"></span> Blue Team
+                </div>
+                <div class="projects-grid">
+                    <!-- PROJECT 4: Malware Analysis -->
+                    <div class="project-card">
+                        <div class="project-thumb"><span>Malware Analysis</span></div>
+                        <div class="project-body">
+                            <div class="project-category">
+                                Malware Analysis · Dibimbing.id
+                            </div>
+                            <div class="project-title">
+                                Windows Reverse HTTPS Payload Analysis
+                            </div>
+                            <p class="project-desc">
+                                Created a Windows reverse HTTPS payload via Metasploit, analyzed in VirusTotal (48/71 detection) and Any.Run Sandbox, identifying 6 indicators of compromise.
+                            </p>
+                            <div class="project-meta">
+                                <span class="meta-label">Tools:</span>
+                                <div class="tags">
+                                    <span class="tag">Metasploit</span
+                  ><span class="tag">VirusTotal</span
+                  ><span class="tag">Any.Run</span>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <a href="docs/malware-analysis.html" target="_blank" class="btn-doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg> View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 5: Digital Forensics -->
+                    <div class="project-card">
+                        <div class="project-thumb"><span>Digital Forensics</span></div>
+                        <div class="project-body">
+                            <div class="project-category">
+                                Digital Forensics · Telkom University
+                            </div>
+                            <div class="project-title">
+                                Forensic Acquisition: USB Drive (7.3GB) using FTK Imager
+                            </div>
+                            <p class="project-desc">
+                                Performed forensic acquisition of a 7.3GB USB drive, verified evidence integrity via MD5/SHA1 hash matching, and recovered deleted files from unallocated space.
+                            </p>
+                            <div class="project-meta">
+                                <span class="meta-label">Tools:</span>
+                                <div class="tags">
+                                    <span class="tag">FTK Imager</span><span class="tag">MD5</span
+                  ><span class="tag">SHA1</span>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <a href="docs/digital-forensics.html" target="_blank" class="btn-doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg> View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 7: Server Management -->
+                    <div class="project-card">
+                        <div class="project-thumb"><span>Server Management</span></div>
+                        <div class="project-body">
+                            <div class="project-category">
+                                Server Management · Dibimbing.id
+                            </div>
+                            <div class="project-title">
+                                Management System & Server di Kali Linux: Apache2 & Virtual Host
+                            </div>
+                            <p class="project-desc">
+                                Linux server administration covering user privilege management, Apache2 setup, access log analysis, and virtual host configuration for multi-site hosting.
+                            </p>
+                            <div class="project-meta">
+                                <span class="meta-label">Tools:</span>
+                                <div class="tags">
+                                    <span class="tag">Apache2</span
+                  ><span class="tag">Kali Linux</span
+                  ><span class="tag">Bash</span>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <a href="docs/server-management.html" target="_blank" class="btn-doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg> View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PROJECT 10: MITRE ATT&CK -->
+                    <div class="project-card">
+                        <div class="project-thumb"><span>MITRE ATT&CK</span></div>
+                        <div class="project-body">
+                            <div class="project-category">
+                                Threat Intelligence · Dibimbing.id
+                            </div>
+                            <div class="project-title">
+                                MITRE ATT&CK Mapping: AWS S3 Data Breach
+                            </div>
+                            <p class="project-desc">
+                                Analisis skenario kebocoran data e-commerce Jakarta (10.000+ pelanggan) menggunakan MITRE ATT&CK Cloud Matrix v14. Memetakan 7 tactic — dari Reconnaissance hingga Impact — beserta IOC, IOA, dan rekomendasi deteksi per tactic.
+                            </p>
+                            <div class="project-meta">
+                                <span class="meta-label">Tools:</span>
+                                <div class="tags">
+                                    <span class="tag">MITRE ATT&CK</span
+                  ><span class="tag">AWS GuardDuty</span
+                  ><span class="tag">AWS Macie</span
+                  ><span class="tag">SIEM</span>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <a href="docs/mitre-attck-s3.html" target="_blank" class="btn-doc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg> View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <br>
+
+
+
+            </div>
+            <!-- end cybersecurity -->
+
+            <!-- WEB DEVELOPMENT -->
+            <div style="margin-bottom: 32px;">
+                <div style="font-family: var(--mono); font-size: 12px; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+                    <span style="width: 28px; height: 1px; background: var(--orange); display: inline-block;"></span> Web Development
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card" style="border-color: rgba(251,146,60,0.25);">
+                        <div class="project-thumb" style="background: linear-gradient(135deg, #0d1a2d 0%, #1a2a1a 100%); border-bottom-color: rgba(251,146,60,0.2);"><span style="color: var(--orange);">OnlyCats</span></div>
+                        <div class="project-body">
+                            <div class="project-category" style="color: var(--orange);">Web Development · Telkom University · Pemrograman Web</div>
+                            <div class="project-title">OnlyCats — Cat Rescue & Adoption Platform</div>
+                            <p class="project-desc">Platform berbasis web untuk mendukung rescue, perawatan, dan adopsi kucing jalanan. Dibangun bersama tim menggunakan Laravel. Saya mengerjakan fitur <strong style="color: var(--text);">Adoption</strong>:
+                        alur pengajuan adopsi oleh user, verifikasi oleh admin (approve/reject), notifikasi status real-time, serta halaman My Adoption.</p>
+                    <div class="project-meta">
+                        <span class="meta-label">My Role:</span>
+                        <div class="tags">
+                            <span class="tag" style="color: var(--orange); border-color: rgba(251,146,60,0.2);">Adoption Feature</span><span class="tag" style="color: var(--orange); border-color: rgba(251,146,60,0.2);">Frontend</span><span class="tag"
+                                style="color: var(--orange); border-color: rgba(251,146,60,0.2);">Backend</span>
+                        </div>
+                    </div>
+                    <div class="project-meta" style="margin-top: 10px;">
+                        <span class="meta-label">Stack:</span>
+                        <div class="tags">
+                            <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="docs/onlycats.html" target="_blank" class="btn-doc">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg> View Documentation
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OnlyCats Mobile (Admin Panel) -->
+            <div class="project-card" style="border-color: rgba(251,146,60,0.25);">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #0d1a2d 0%, #1a2a1a 100%); border-bottom-color: rgba(251,146,60,0.2);">
+                    <span style="color: var(--orange);">OnlyCats<br><span style="font-size:11px;opacity:0.7;">Mobile Admin</span></span>
+                </div>
+                <div class="project-body">
+                    <div class="project-category" style="color: var(--orange);">Web &amp; Mobile Development · Telkom University · Pemrograman Mobile</div>
+                    <div class="project-title">OnlyCats Mobile — Cat Rescue &amp; Adoption (Admin Panel)</div>
+                    <p class="project-desc">Aplikasi mobile Flutter untuk platform rescue dan adopsi kucing. Saya membangun seluruh <strong style="color: var(--text);">Admin Panel</strong>: dashboard statistik, manajemen rescue, inventory kucing (CRUD + maps), kelola adopsi,
+                        chat real-time, manajemen akun pengguna, dan notifikasi push.</p>
+                    <div class="project-meta">
+                        <span class="meta-label">My Role:</span>
+                        <div class="tags">
+                            <span class="tag" style="color: var(--orange); border-color: rgba(251,146,60,0.2);">Admin Panel</span><span class="tag" style="color: var(--orange); border-color: rgba(251,146,60,0.2);">Flutter</span><span class="tag" style="color: var(--orange); border-color: rgba(251,146,60,0.2);">Firebase</span>
+                        </div>
+                    </div>
+                    <div class="project-meta" style="margin-top: 10px;">
+                        <span class="meta-label">Stack:</span>
+                        <div class="tags">
+                            <span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Firestore</span><span class="tag">Firebase Auth</span><span class="tag">Firebase Storage</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="docs/onlycats-mobile.html" target="_blank" class="btn-doc">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg> View Documentation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+        <div class="container fade-in">
+            <div class="section-title">Education & Experience</div>
+            <div class="exp-list">
+                <div class="exp-item">
+                    <div class="exp-date">2025 to Ongoing</div>
+                    <div>
+                        <div class="exp-org">Dibimbing.id</div>
+                        <div class="exp-role">
+                            Cybersecurity Bootcamp: Batch 4 & Batch 7
+                        </div>
+                        <div class="exp-desc">
+                            Hands-on training covering Linux Fundamentals, Network Security, Ethical Hacking, Penetration Testing, Threat Analysis, Defensive Security & Monitoring, and ISMS. All projects documented with formal reports submitted per assignment.
+                        </div>
+                        <div class="exp-tags tags">
+                            <span class="tag">Ethical Hacking</span
+                ><span class="tag">Penetration Testing</span
+                ><span class="tag">Threat Analysis</span
+                ><span class="tag">Defensive Security</span
+                ><span class="tag">ISO/IEC 27001</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-date">2023 to Present</div>
+                    <div>
+                        <div class="exp-org">Telkom University</div>
+                        <div class="exp-role">Undergraduate: Information Technology</div>
+                        <div class="exp-desc">
+                            Currently in 6th semester with GPA 3.57/4.00. Relevant coursework includes Cyber Security, Digital Forensics, Computer Networks, and Database Systems.
+                        </div>
+                        <div class="exp-tags tags">
+                            <span class="tag">GPA 3.57</span
+                >
+                        </div>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-date">Ongoing</div>
+                    <div>
+                        <div class="exp-org">Young On Top (YOT) Bandung</div>
+                        <div class="exp-role">Staff: Health Division</div>
+                        <div class="exp-desc">
+                            Planned and executed health-focused programs and events. Collaborated with cross-functional teams to manage program logistics and ensure successful event delivery.
+                        </div>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-date">Ongoing</div>
+                    <div>
+                        <div class="exp-org">PMK Telkom University</div>
+                        <div class="exp-role">
+                            Active Member: Student Community Organization
+                        </div>
+                        <div class="exp-desc">
+                            Participated in organizing and coordinating community events and weekly gatherings, contributing to event planning, scheduling, and team coordination within a student community.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="container fade-in">
+            <div class="section-title">Contact</div>
+            <div class="contact-wrap">
+                <div class="contact-intro">
+                    <p>
+                        Currently open to internship opportunities, freelance security work, or collaborations in cybersecurity. Feel free to reach out.
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:romayana4@gmail.com" class="contact-link"><span class="contact-link-icon">@</span>romayana4@gmail.com</a>
+                            <a href="https://www.linkedin.com/in/roma-yanapasaribu-009a9328b" target="_blank" class="contact-link"><span class="contact-link-icon">in</span>roma-yanapasaribu</a
+              >
+              <a
+                href="https://github.com/romaynaa"
+                target="_blank"
+                class="contact-link"
+                ><span class="contact-link-icon">gh</span>github.com/romaynaa</a
+              >
+              <a href="#" class="contact-link"
+                ><span class="contact-link-icon">📍</span>Bandung, Indonesia</a
+              >
+            </div>
+          </div>
+          <div class="terminal">
+            <div class="terminal-bar">
+              <div class="t-dot" style="background: #f87171"></div>
+              <div class="t-dot" style="background: #fbbf24"></div>
+              <div class="t-dot" style="background: #34d399"></div>
+            </div>
+            <div class="terminal-body">
+              <div>
+                <span class="t-prompt">roma@sec</span
+                ><span class="t-muted">:~$</span>
+                <span class="t-cmd">cat about.txt</span>
+              </div>
+              <div class="t-out">name: Roma Yana Pasaribu</div>
+              <div class="t-out">role: Security Enthusiast</div>
+              <div class="t-out">location: Bandung, Indonesia</div>
+              <div class="t-out">status: open_to_opportunities</div>
+              <div style="margin-top: 8px">
+              </div>
+                <span class="t-prompt">roma@sec</span
+                ><span class="t-muted">:~$</span> <span class="t-cursor"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <span>Roma Yana Pasaribu</span> · Security Enthusiast · Bandung,
+        Indonesia · <span>2026</span>
+      </div>
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img id="lightbox-img" src="" alt="Screenshot">
+    </div>
+
+    <script>
+      function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+
+    <script>
+      const phrases = [
+        "Penetration Tester",
+        "Malware Analyst",
+        "Digital Forensics",
+        "Web App Security",
+        "Social Engineering",
+        "Network Security",
+      ];
+      let pi = 0,
+        ci = 0,
+        deleting = false;
+      const el = document.getElementById("typed");
+
+      function type() {
+        const cur = phrases[pi];
+        if (!deleting) {
+          ci++;
+          el.textContent = cur.slice(0, ci);
+          if (ci === cur.length) {
+            deleting = true;
+            setTimeout(type, 1800);
+            return;
+          }
+        } else {
+          ci--;
+          el.textContent = cur.slice(0, ci);
+          if (ci === 0) {
+            deleting = false;
+            pi = (pi + 1) % phrases.length;
+          }
+        }
+        setTimeout(type, deleting ? 50 : 80);
+      }
+      type();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        {
+          threshold: 0.08,
+        },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+
+      // Hamburger menu
+      const hamburger = document.getElementById("hamburger");
+      const dropdown = document.getElementById("nav-dropdown");
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("open");
+        dropdown.classList.toggle("open");
+      });
+      // Close when a link is clicked
+      document.querySelectorAll(".nav-drop-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("open");
+          dropdown.classList.remove("open");
+        });
+      });
+      // Close on outside click
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !dropdown.contains(e.target)) {
+          hamburger.classList.remove("open");
+          dropdown.classList.remove("open");
+        }
+      });
+    </script>
+  </body>
+</ht
